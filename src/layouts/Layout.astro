@@ -1,0 +1,28 @@
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>PlantsCare</title>
+
+    <!-- Importación de fuentes (ya las tenías en tu layout) -->
+    <style>
+      @import "@fontsource/poppins/400.css";
+      @import "@fontsource/poppins/500.css";
+      @import "@fontsource/poppins/600.css";
+      @import "@fontsource/poppins/700.css";
+      @import "@fontsource/poppins/800.css";
+      @import "@fontsource/poppins/900.css";
+    </style>
+
+    <!-- Tailwind CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-green-50 text-gray-800 font-sans">
+    <slot />
+  </body>
+</html>

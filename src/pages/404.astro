@@ -1,0 +1,29 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Error 404" showHeader={false}>
+  <div class="flex flex-col justify-center items-center min-h-screen bg-tema-3 text-white text-center px-6">
+
+    <img
+      src="/404.gif"
+      alt="404 Not Found"
+      class="max-w-full h-auto rounded-lg shadow-xl border-4 border-tema-2 mb-6"
+    />
+
+    <h1 class="text-4xl font-bold mb-4 animate-pulse px-6 py-3 rounded-lg border-4 border-tema-7 bg-tema-2 text-tema-10 shadow-md">
+      Página no encontrada.
+    </h1>
+
+    <p class="text-lg text-tema-8 mb-6">
+      Parece que te has perdido... pero puedes volver a PlantsCare.
+    </p>
+
+    <a
+      href="/bienvenido"
+      class="px-6 py-3 bg-tema-5 text-tema-10 font-medium rounded-lg shadow-md hover:bg-tema-4 transition-all border-2 border-tema-8"
+    >
+      🔙 Volver a PlantsCare
+    </a>
+  </div>
+</Layout>

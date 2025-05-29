@@ -1,0 +1,220 @@
+---
+import OpinionesComponent from "@/components/OpinionesComponent";
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PlantsCare</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-green-50 text-gray-800 font-sans">
+    <!-- Header -->
+    <header class="bg-green-100 p-6 text-center shadow-md">
+      <h1 class="text-4xl font-bold text-green-800">
+        Bienvenido a <span class="text-green-600">PlantsCare</span>
+      </h1>
+      <p class="mt-2 text-xl text-gray-700 max-w-2xl mx-auto">
+        Automatizamos el cuidado de tus cultivos con Inteligencia Artificial e
+        IoT, para que disfrutes de frutas, verduras y hortalizas frescas sin
+        complicaciones.
+      </p>
+    </header>
+
+    <!-- Hero / Problema + Solución -->
+    <section class="p-8 max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-semibold mb-4 text-green-800">
+        El reto que enfrentamos
+      </h2>
+      <p class="text-lg mb-6 text-gray-700">
+        La agricultura tradicional pierde mano de obra joven y los consumidores
+        exigen productos frescos y de calidad. ¿Cómo lograr cultivos eficientes,
+        rentables y sostenibles sin depender de largas jornadas de trabajo
+        manual?
+      </p>
+      <h2 class="text-3xl font-semibold mb-4 text-green-800">
+        Nuestra propuesta
+      </h2>
+      <p class="text-lg font-semibold text-green-700">
+        <span class="font-normal">PlantsCare</span> combina sensores avanzados, visión
+        artificial y machine learning para supervisar y optimizar tus cultivos (hidropónicos,
+        invernaderos o huertos urbanos), con mínima intervención.
+      </p>
+    </section>
+
+    <!-- Qué es -->
+    <section class="bg-white p-10 shadow-inner">
+      <div class="max-w-4xl mx-auto space-y-4">
+        <h2 class="text-3xl font-bold text-green-800">¿Qué es PlantsCare?</h2>
+        <p class="text-lg text-gray-700">
+          Un sistema IoT modular todo-en-uno que integra:
+        </p>
+        <ul class="list-disc pl-6 space-y-2 text-lg text-gray-700">
+          <li>Sensores de temperatura, humedad, CO₂, pH y nutrientes.</li>
+          <li>Cámara inteligente que clasifica el estado de tu cultivo.</li>
+          <li>
+            Conectividad remota para recibir alertas y métricas en tiempo real.
+          </li>
+        </ul>
+        <p class="text-lg text-green-700 font-semibold">
+          Detecta problemas. Ajusta condiciones. Disfruta de cosechas óptimas.
+        </p>
+      </div>
+    </section>
+
+    <!-- Cómo funciona -->
+    <section class="p-10 bg-green-50">
+      <div class="max-w-4xl mx-auto space-y-4">
+        <h2 class="text-3xl font-bold text-green-800">¿Cómo funciona?</h2>
+        <ul class="list-disc pl-6 space-y-2 text-lg text-gray-700">
+          <li>Dispositivos instalados miden parámetros clave cada minuto.</li>
+          <li>
+            La cámara captura imágenes, la IA detecta madurez o plagas al
+            instante.
+          </li>
+          <li>
+            Datos y clasificaciones se envían a la nube para almacenamiento y
+            análisis.
+          </li>
+          <li>
+            Accede a gráficas y notificaciones desde tu móvil, tablet o PC.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Futuro -->
+    <section class="bg-white p-10">
+      <div class="max-w-4xl mx-auto space-y-4">
+        <h2 class="text-3xl font-bold text-green-800">Visión a largo plazo</h2>
+        <p class="text-lg text-gray-700">
+          Evolucionaremos hacia un ecosistema totalmente inteligente y autónomo:
+          <strong
+            >riego automático, nutrición a medida y control climático 24/7</strong
+          >, con aprendizaje colaborativo entre miles de usuarios.
+        </p>
+        <ul class="list-disc pl-6 space-y-2 text-lg text-gray-700">
+          <li>Dosificación precisa de nutrientes según etapa de cultivo.</li>
+          <li>Predicción de enfermedades y plagas antes de que aparezcan.</li>
+          <li>Optimización de recursos: agua, energía y espacio.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="bg-green-100 p-10 text-center">
+      <h2 class="text-3xl font-bold text-green-900 mb-4">
+        Empieza tu cultivo inteligente <strong>hoy</strong>
+      </h2>
+      <p class="text-lg text-gray-700 max-w-3xl mx-auto mb-6">
+        Prueba tu primer mes gratis y descubre cómo <strong>PlantsCare</strong>
+        transforma tu forma de cultivar.
+      </p>
+      <a
+        href="#comprar"
+        class="bg-green-700 text-white px-6 py-3 rounded-xl text-lg font-semibold hover:bg-green-800 transition"
+      >
+        Ver planes y precios
+      </a>
+    </section>
+
+    <!-- Planes -->
+    <section id="comprar" class="bg-white p-10">
+      <h2 class="text-3xl font-bold text-green-800 mb-6 text-center">
+        Encuentra el Kit PlantsCare perfecto para tu cultivo
+      </h2>
+      <div
+        class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12"
+      >
+        <!-- Kit Individual -->
+        <div
+          class="relative bg-green-50 p-6 rounded-xl shadow-md border border-green-200"
+        >
+          <h3 class="text-2xl font-bold mb-2">Kit Individual</h3>
+          <p class="mb-4 text-gray-700">
+            Ideal para aficionados y pequeños huertos.
+          </p>
+          <p class="text-xl font-semibold text-green-800 mb-4">24,95 €/mes</p>
+          <ul class="list-disc pl-6 space-y-2 text-gray-700 text-left mb-6">
+            <li>1 nodo de sensores + cámara + gateway WiFi</li>
+            <li>Alertas móviles y gráficas básicas</li>
+            <li>Instalación plug & play</li>
+            <li>Soporte comunitario</li>
+          </ul>
+          <a
+            href="#comprar"
+            class="inline-block bg-green-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-700 transition"
+          >
+            Seleccionar Kit Individual
+          </a>
+        </div>
+
+        <!-- Kit Profesional -->
+        <div
+          class="relative bg-white p-8 rounded-2xl shadow-xl border-2 border-green-600"
+        >
+          <div
+            class="absolute -top-3 right-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-bold"
+          >
+            Recomendado
+          </div>
+          <h3 class="text-2xl font-bold mb-2">Kit Profesional</h3>
+          <p class="mb-4 text-gray-700">
+            Para empresas e invernaderos a gran escala.
+          </p>
+          <p class="text-2xl font-extrabold text-green-800 mb-4">99 €/mes</p>
+          <ul class="list-disc pl-6 space-y-2 text-gray-700 text-left mb-6">
+            <li>Hasta 4 nodos de sensores + cámara avanzada</li>
+            <li>Gateway industrial con respaldo LTE</li>
+            <li>Integración con riego y fertilización automáticos</li>
+            <li>Dashboard avanzado con alertas predictivas</li>
+            <li>Soporte SLA 24/7 y actualizaciones OTA</li>
+          </ul>
+          <a
+            href="#comprar"
+            class="inline-block bg-green-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-700 transition"
+          >
+            Seleccionar Kit Profesional
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Opiniones -->
+    <OpinionesComponent client:load />
+
+    <!-- FAQ -->
+    <section class="bg-white p-10">
+      <div class="max-w-4xl mx-auto space-y-6 text-lg text-gray-700">
+        <h2 class="text-3xl font-bold text-green-800 mb-6">
+          Preguntas frecuentes
+        </h2>
+        <div>
+          <strong>¿Funciona en cualquier cultivo?</strong><br />
+          Sí, PlantsCare se adapta a tomates, lechugas, fresas y más.
+        </div>
+        <div>
+          <strong>¿Puedo usarlo sin internet?</strong><br />
+          Registra datos localmente; para alertas en tiempo real requiere conexión.
+        </div>
+        <div>
+          <strong>¿Cuál es la precisión del sensor de pH?</strong><br />
+          ±0,1 pH, ideal para mantener el rango óptimo de nutrientes.
+        </div>
+        <div>
+          <strong>¿Qué mantenimiento necesita?</strong><br />
+          Limpieza rápida de sondas y reemplazo anual de filtros de sensor.
+        </div>
+        <div>
+          <strong>¿Qué pasa si cancelo la suscripción?</strong><br />
+          Puedes seguir usando el hardware en local o devolverlo sin penalización.
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

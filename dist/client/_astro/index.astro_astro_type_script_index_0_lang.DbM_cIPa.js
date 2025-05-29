@@ -1,0 +1,1 @@
+import{s as e,a as t}from"./client.DzpjPbNs.js";document.getElementById("login-google")?.addEventListener("click",()=>e("google"));document.getElementById("login-github")?.addEventListener("click",()=>e("github"));document.getElementById("logout")?.addEventListener("click",async()=>{await t({}),window.location.href="/"});

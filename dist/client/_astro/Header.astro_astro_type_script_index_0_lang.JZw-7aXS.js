@@ -1,0 +1,1 @@
+import{a as i}from"./client.DzpjPbNs.js";document.getElementById("logout")?.addEventListener("click",()=>{i().then(()=>window.location.href="/")});const t=document.getElementById("menu-btn"),n=document.getElementById("nav-links");t.addEventListener("click",()=>{n.classList.toggle("hidden");const e=!n.classList.contains("hidden");t.setAttribute("aria-expanded",e.toString())});

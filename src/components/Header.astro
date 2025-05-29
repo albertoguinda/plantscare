@@ -1,0 +1,115 @@
+---
+import { getSession } from "auth-astro/server";
+const session = await getSession(Astro.request);
+
+if (!session) {
+  return Astro.redirect("/");
+}
+---
+
+<header class="bg-green-50 text-green-800 shadow-md sticky top-0 z-50">
+  <div class="container mx-auto flex items-center justify-between py-4 px-6">
+    <!-- Logo y nombre -->
+    <a href="/" class="flex items-center gap-2">
+      <div class="h-12 w-12 overflow-hidden">
+        <img
+          src="/favicon.svg"
+          alt="Logo PlantsCare"
+          class="h-full w-full object-cover"
+        />
+      </div>
+      <span class="text-2xl font-extrabold ml-2">PLANTSCARE</span>
+    </a>
+
+    <!-- Botón hamburguesa (solo móvil) -->
+    <button
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="nav-links"
+      class="md:hidden text-green-700 focus:outline-none"
+      id="menu-btn"
+    >
+      <svg
+        id="menu-icon"
+        class="h-8 w-8"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+
+    <nav
+      id="nav-links"
+      class="hidden absolute top-full left-0 w-full bg-green-50 shadow-md flex-col items-center text-center md:flex md:static md:w-auto md:shadow-none md:flex-row md:gap-6 md:bg-transparent"
+    >
+      <a
+        href="/bienvenido"
+        class="nav-link font-bold text-lg text-green-800 hover:text-green-600 transition p-3"
+        >Bienvenido</a
+      >
+      <a
+        href="/aire"
+        class="nav-link font-bold text-lg text-green-800 hover:text-green-600 transition p-3"
+        >Aire</a
+      >
+      <a
+        href="/agua"
+        class="nav-link font-bold text-lg text-green-800 hover:text-green-600 transition p-3"
+        >Agua</a
+      >
+      <a
+        href="/camara"
+        class="nav-link font-bold text-lg text-green-800 hover:text-green-600 transition p-3"
+        >Cámara</a
+      >
+    </nav>
+
+    <!-- Usuario -->
+    <div class="hidden md:flex items-center space-x-4">
+      {
+        session ? (
+          <>
+            <span class="text-green-700">¡Hola, {session.user?.name}!</span>
+            <button
+              id="logout"
+              class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition"
+            >
+              Salir
+            </button>
+          </>
+        ) : (
+          <a
+            href="/bienvenido"
+            class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+          >
+            Iniciar sesión
+          </a>
+        )
+      }
+    </div>
+  </div>
+</header>
+
+<script>
+  import { signOut } from "auth-astro/client";
+
+  document.getElementById("logout")?.addEventListener("click", () => {
+    signOut().then(() => (window.location.href = "/"));
+  });
+
+  const menuBtn = document.getElementById("menu-btn");
+  const navLinks = document.getElementById("nav-links");
+
+  menuBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("hidden");
+    const isOpen = !navLinks.classList.contains("hidden");
+    menuBtn.setAttribute("aria-expanded", isOpen.toString());
+  });
+</script>
