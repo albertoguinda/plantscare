@@ -6,198 +6,129 @@ import "react-toastify/dist/ReactToastify.css";
 
 const MySwal = withReactContent(Swal);
 
-// IP ESP32-CAM
-//const host = "192.168.10.8"; //CAMPUS
-const host = "192.168.1.138"; //CASA
-
 const endpoints = {
-  stream:      `http://${host}:81/`,      // MJPEG raíz
-  capture:     `http://${host}/capture`,
-  restart:     `http://${host}/restart`,
-  flashToggle: `http://${host}/flash/toggle`,
-  wifi:        `http://${host}/wifi`,
+  stream: "http://192.168.15.165/stream",
+  capture: "http://192.168.15.165/capture",
+  restart: "http://192.168.15.165/restart",
+  wifi: "http://192.168.15.165/wifi",
 };
 
 const VideoComponent = ({ title }: { title: string }) => {
-  const [loading, setLoading] = useState(false);
-  const [showStream, setShowStream] = useState(true);
-  const [lastPhoto, setLastPhoto] = useState<string | null>(null);
-  const [flashOn, setFlashOn] = useState(false);
-  const [streamKey, setStreamKey] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Toast genérico
-  const toastify = (
-    msg: string,
-    type: "success" | "error" | "info" = "success"
-  ) =>
-    toast[type](msg, {
+  const showToast = (mensaje: string, tipo: "success" | "error" | "info" = "success") => {
+    toast[tipo](mensaje, {
       position: "top-right",
       autoClose: 3000,
+      theme: "light",
       style: {
         background:
-          type === "success"
-            ? "linear-gradient(to right, #4ade80, #22c55e)"
-            : type === "error"
-            ? "linear-gradient(to right, #ef4444, #b91c1c)"
-            : "linear-gradient(to right, #60a5fa, #3b82f6)",
+          tipo === "success"
+            ? "linear-gradient(to right, #a8e063, #56ab2f)"
+            : tipo === "error"
+            ? "linear-gradient(to right, #f85032, #e73827)"
+            : "linear-gradient(to right, #2193b0, #6dd5ed)",
         color: "#fff",
         fontWeight: "bold",
-        borderRadius: "0.5rem",
+        borderRadius: "10px",
       },
     });
+  };
 
-  // Modal para WiFi
-  const promptWiFi = async () => {
-    const { value } = await MySwal.fire({
+  const ejecutarAccion = async (url: string, metodo = "GET", body: object | null = null) => {
+    setIsLoading(true);
+    try {
+      const options: RequestInit = {
+        method: metodo,
+        headers: { "Content-Type": "application/json" },
+        ...(body ? { body: JSON.stringify(body) } : {}),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      showToast("✅ Acción ejecutada correctamente");
+    } catch (error) {
+      console.error(`Error en ${url}:`, error);
+      showToast("❌ Error al ejecutar la acción", "error");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleWifiModal = async () => {
+    const { value: formValues } = await MySwal.fire({
       title: "Cambiar WiFi",
       html: `
-        <input id="ssid" class="swal2-input" placeholder="🛜 SSID">
-        <input id="pwd" type="password" class="swal2-input" placeholder="🔒 Contraseña">
+        <input id="swal-ssid" class="swal2-input" placeholder="🔗 SSID">
+        <input id="swal-password" type="password" class="swal2-input" placeholder="🔐 Contraseña">
       `,
-      showCancelButton: true,
-      confirmButtonText: "Enviar",
       focusConfirm: false,
+      confirmButtonText: "Enviar",
+      cancelButtonText: "Cancelar",
+      showCancelButton: true,
       preConfirm: () => {
-        const ssid = (document.getElementById("ssid") as HTMLInputElement).value.trim();
-        const password = (document.getElementById("pwd") as HTMLInputElement).value.trim();
+        const ssid = (document.getElementById("swal-ssid") as HTMLInputElement)?.value.trim();
+        const password = (document.getElementById("swal-password") as HTMLInputElement)?.value.trim();
         if (!ssid || !password) {
-          Swal.showValidationMessage("Completa ambos campos");
+          Swal.showValidationMessage("Por favor, completa ambos campos");
           return;
         }
         return { ssid, password };
       },
     });
-    return value;
-  };
 
-  // Ejecuta acción según endpoint
-  const doAction = async (url: string) => {
-    setLoading(true);
-    try {
-      if (url === endpoints.capture) {
-        // snapshot
-        const resp = await fetch(url);
-        if (!resp.ok) throw new Error();
-        const blob = await resp.blob();
-        setLastPhoto(URL.createObjectURL(blob));
-        toastify("Foto capturada");
-      } else if (url === endpoints.flashToggle) {
-        // toggle flash
-        const resp = await fetch(url);
-        if (!resp.ok) throw new Error();
-        const state = await resp.text();
-        setFlashOn(state === "ON");
-        toastify(`Flash ${state}`, "info");
-      } else if (url === endpoints.wifi) {
-        // cambiar WiFi
-        const creds = await promptWiFi();
-        if (creds) {
-          const resp = await fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(creds),
-          });
-          if (!resp.ok) throw new Error();
-          toastify("WiFi enviado");
-        }
-      } else {
-        // restart u otro GET
-        const resp = await fetch(url);
-        if (!resp.ok) throw new Error();
-        toastify(
-          url === endpoints.restart ? "Reiniciando…" : "Acción completada"
-        );
-        if (url === endpoints.restart) {
-          setLastPhoto(null);
-          setTimeout(() => setStreamKey(k => k + 1), 2000);
-        }
-      }
-    } catch {
-      toastify("Error al ejecutar", "error");
-    } finally {
-      setLoading(false);
+    if (formValues) {
+      await ejecutarAccion(endpoints.wifi, "POST", formValues);
+      showToast("📡 Datos WiFi enviados");
     }
   };
 
-  // Toggle stream
-  const toggleStream = () => {
-    setShowStream(v => !v);
-    if (!showStream) setStreamKey(k => k + 1);
-  };
-
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="w-full max-w-full px-4 sm:px-6 lg:px-8 py-8 bg-white dark:bg-gray-900 rounded-none sm:rounded-2xl shadow-none sm:shadow-2xl overflow-hidden">
       <ToastContainer />
-      <h2 className="text-3xl font-bold text-center mb-6">{title}</h2>
+      <h3 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 dark:text-white mb-6 sm:mb-10">
+        {title}
+      </h3>
 
       {/* Botones */}
-      <div className="flex flex-wrap justify-center gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6 sm:mb-8 text-sm">
         <button
-          onClick={toggleStream}
-          disabled={loading}
-          className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg"
-        >
-          {showStream ? "❌ Ocultar Stream" : "🎥 Ver Stream"}
+          onClick={() => showToast("🎥 Streaming embebido cargado", "info")}
+          className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-xl shadow-md transition-all w-full">
+          🎥 Ver Streaming
         </button>
-
         <button
-          onClick={() => doAction(endpoints.capture)}
-          disabled={loading}
-          className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg"
-        >
-          📸 Capturar Foto
+          onClick={() => ejecutarAccion(endpoints.capture)}
+          className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded-xl shadow-md transition-all w-full">
+          📸 Tomar Foto
         </button>
-
         <button
-          onClick={() => doAction(endpoints.flashToggle)}
-          disabled={loading}
-          className={`px-6 py-2 rounded-lg text-white ${
-            flashOn ? "bg-green-500 hover:bg-green-600" : "bg-green-400 hover:bg-green-500"
-          }`}
-        >
-          💡 Flash {flashOn ? "ON" : "OFF"}
-        </button>
-
-        <button
-          onClick={() => doAction(endpoints.restart)}
-          disabled={loading}
-          className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg"
-        >
+          onClick={() => ejecutarAccion(endpoints.restart)}
+          className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-xl shadow-md transition-all w-full">
           🔄 Reiniciar
         </button>
-
         <button
-          onClick={() => doAction(endpoints.wifi)}
-          disabled={loading}
-          className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg"
-        >
+          onClick={handleWifiModal}
+          className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded-xl shadow-md transition-all w-full">
           📶 Cambiar WiFi
         </button>
       </div>
 
-      {/* Stream MJPEG */}
-      {showStream && (
-        <div className="relative w-full" style={{ paddingBottom: "75%" }}>
-          <img
-            key={streamKey}
-            src={endpoints.stream}
-            alt="ESP32-CAM Live"
-            className="absolute inset-0 w-full h-full object-contain bg-black"
-          />
+      {/* Estado de carga */}
+      {isLoading && (
+        <div className="text-center text-base sm:text-lg text-green-600 font-medium animate-pulse mb-4">
+          🔄 Ejecutando acción...
         </div>
       )}
 
-      {/* Última captura */}
-      {lastPhoto && (
-        <div className="mt-6 text-center">
-          <h3 className="text-xl font-semibold mb-2">Última Captura</h3>
-          <img
-            src={lastPhoto}
-            alt="Última captura"
-            className="mx-auto border rounded-lg max-w-full"
-          />
-        </div>
-      )}
+      {/* Streaming */}
+      <div className="overflow-hidden rounded-xl shadow-xl border border-gray-300 dark:border-gray-700">
+        <iframe
+          src={endpoints.stream}
+          className="w-full aspect-video"
+          title="ESP32-CAM Streaming"
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
+        />
+      </div>
     </div>
   );
 };
