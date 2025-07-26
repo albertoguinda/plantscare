@@ -14,7 +14,7 @@
 
 PlantsCare es una plataforma modular que:
 
-- **Captura** datos de sensores (temperatura, humedad, CO₂, luz, pH, EC) usando ESP8266 via CoAP y SensorTile.box Pro via BLE.
+- **Captura** datos de sensores (temperatura, humedad, CO₂, luz, pH, EC) con ESP8266 vía CoAP y SensorTile.box Pro vía BLE.
 - **Envía** imágenes desde ESP32-CAM al servidor mediante HTTP POST para clasificación de plagas y madurez.
 - **Procesa** y almacena lecturas en InfluxDB y resultados de IA en SQLite, todo en un backend Flask/ONNX desplegado en AWS EC2.
 - **Ofrece** un dashboard ultrarrápido con Astro + React + TypeScript + TailwindCSS que consume endpoints REST/Express y muestra gráficas en tiempo real (Recharts).
@@ -26,7 +26,6 @@ PlantsCare es una plataforma modular que:
 ## 🛠️ Tecnologías
 
 - **Frontend:** Astro · React · TypeScript · TailwindCSS · Recharts
-- **Visualización adicional:** Grafana
 - **Backend IoT:** Node.js + Express · Flask (Python) + ONNX · MQTT (Mosquitto) · CoAP · HTTP POST
 - **Dispositivos:** ESP8266 · ESP32-CAM · SensorTile.box Pro · Raspberry Pi 4
 - **Cloud & Base de datos:** AWS EC2 · InfluxDB · SQLite
@@ -36,25 +35,30 @@ PlantsCare es una plataforma modular que:
 
 ## 🏗️ Arquitectura & Flujo de Datos
 
-```mermaid
-flowchart LR
-  subgraph Sensores
-    A[ESP8266: temp/CO₂/humedad] -->|CoAP| RPI[Raspberry Pi]
-    B[SensorTile.box Pro] -->|BLE| RPI
-    C[ESP32-CAM] -->|HTTP POST imágenes| RPI
-  end
+```bash
+/
+├─ Sensores
+│ ├─ ESP8266 (CoAP) ───▶ Raspberry Pi
+│ ├─ SensorTile.box Pro (BLE) ───▶ Raspberry Pi
+│ └─ ESP32-CAM (HTTP POST imágenes) ───▶ Raspberry Pi
+│
+├─ Raspberry Pi ───▶ MQTT (Mosquitto) ───▶ AWS EC2
+│
+├─ AWS EC2
+│ ├─ InfluxDB
+│ ├─ SQLite
+│ └─ Flask + ONNX (EfficientNet_B0)
+│
+└─ Frontend (Astro + React) ───▶ Consume REST /api/\* → Gráficas (Recharts)
+```
 
-  RPI -->|MQTT (Mosquitto)| EC2[(AWS EC2)]
-  EC2 --> InfluxDB
-  EC2 --> SQLite
-  EC2 -->|Flask /api/classify| ONNX["EfficientNet_B0.onnx"]
-  Browser -->|REST /api/*| Astro[Astro + React]
-Muestreo cada 30 s; el dashboard puede alternar entre datos reales y simulados.
+> Los sensores muestrean cada 30 s; el dashboard puede alternar entre datos reales y simulados.
 
-🚀 Instalación & Ejecución
-bash
-Copiar
-Editar
+---
+
+## 🚀 Instalación & Ejecución
+
+```bash
 git clone https://github.com/albertoguinda/plantscare.git
 cd plantscare
 
@@ -74,23 +78,24 @@ npm install
 npm run dev
 
 # Abre en el navegador:
-http://localhost:4173
+http://localhost:4321
 📂 Estructura del Proyecto
-csharp
-Copiar
-Editar
+
 /
 ├── DATASHEETS/            # Datasheets de sensores y microcontroladores
 ├── EC2_AWS/               # Backend ML & scripts MQTT → InfluxDB
 ├── ESP_AGUA/              # Firmware ESP8266 (sensor de agua)
 ├── ESP_AIRE/              # Firmware ESP8266 (sensor de aire)
-├── ESP_CAMARA/            # Código ESP32-CAM (streaming via HTTP POST)
+├── ESP_CAMARA/            # Código ESP32-CAM (streaming HTTP POST)
 ├── RASPBERRY/             # Scripts Python CoAP, MQTT e integración
 ├── docs/                  # Diagramas, BMC, DAFO, presentaciones
 ├── dist/                  # Build estático del frontend
 ├── public/                # Assets estáticos para Astro
 ├── src/                   # Código fuente Astro + React + TailwindCSS
 └── README.md
+
+---
+
 🔧 Futuras Mejoras
 Añadir conectividad LoRaWAN/NB-IoT para entornos remotos.
 
@@ -106,4 +111,6 @@ MIT © Alberto Guinda Sevilla
 GitHub: github.com/albertoguinda
 
 LinkedIn: linkedin.com/in/albertoguindasevilla
+
+---
 ```
