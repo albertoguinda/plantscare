@@ -48,7 +48,7 @@ PlantsCare es una plataforma modular que:
 
 ## 🏗️ Arquitectura & Flujo de Datos
 
-```text
+```bash
 /
 ├─ Sensores
 │   ├─ ESP8266 (CoAP) ───▶ Raspberry Pi
@@ -95,6 +95,8 @@ http://localhost:4321
 
 📂 Estructura del Proyecto
 
+```bash
+
 /
 ├── DATASHEETS/ # Datasheets de sensores y microcontroladores
 ├── EC2_AWS/ # Backend ML & scripts MQTT → InfluxDB
@@ -107,7 +109,6 @@ http://localhost:4321
 ├── public/ # Assets estáticos para Astro
 ├── src/ # Código fuente Astro + React + TailwindCSS
 └── README.md
-
 ```
 
 ---
@@ -127,5 +128,7 @@ MIT © Alberto Guinda Sevilla
 
 - GitHub: [github.com/albertoguinda](https://github.com/albertoguinda)
 - LinkedIn: [linkedin.com/in/albertoguindasevilla](https://linkedin.com/in/albertoguindasevilla/)
+
+```
 
 ```
