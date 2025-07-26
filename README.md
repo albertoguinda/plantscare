@@ -87,7 +87,7 @@ mosquitto -c mosquitto.conf
 cd ../RASPBERRY
 python servidorcoap.py &
 python mqtt_to_influx.py &
-python servidorflask.py &
+python servidorflask.py
 ```
 
 # Frontend
