@@ -1,129 +1,109 @@
-# ![PlantsCare Logo](./public/PLANTSCARE.png)
+# 🌱 PlantsCare
 
-# PLANTSCARE
-
-Sistema IoT integral para monitorizar, automatizar y cuidar cultivos hidropónicos e invernaderos.  
-Combina sensores, visión artificial e inteligencia artificial para ofrecer una plataforma web moderna y escalable.
-
-[🌐 Demo online](https://plantscareweb.vercel.app)
-
-> ⚠️ Solo puedes iniciar sesión usando el botón de Google. Los demás métodos de autenticación están desactivados.
+> **Sistema IoT integral para cultivos hidropónicos e invernaderos**  
+> Monitorización en tiempo real, visión artificial y control automatizado.
 
 ---
 
-## 🌟 Características principales
-
-- Monitorización 24/7 de parámetros: temperatura, humedad, CO₂, luz, agua, etc.
-- Detección automática de plagas y madurez mediante visión artificial (IA).
-- Dashboard web responsive con datos en tiempo real, gráficas, alertas y sugerencias.
-- Arquitectura modular y escalable: añade sensores y dispositivos fácilmente.
-- Analítica descriptiva, predictiva y prescriptiva.
-- Cloud y Edge Computing: procesamiento local (Raspberry Pi) y en la nube (AWS EC2).
-- Notificaciones y sugerencias automáticas.
-- Fácil instalación y puesta en marcha plug & play.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-000?logo=vercel)](https://plantscareweb.vercel.app)  
+[![Código en GitHub](https://img.shields.io/badge/GitHub-Repo-181717?logo=github)](https://github.com/albertoguinda/plantscare)
 
 ---
 
-## 🏗️ Arquitectura general
+## 🔭 Resumen
 
-[Sensores IoT (ESP8266, ESP32-CAM, SensorTile.box Pro)]
-│ (CoAP, MQTT, HTTP, BLE)
-│
-[Raspberry Pi (Gateway, MQTT Broker, scripts Python)]
-│
-[Cloud AWS EC2 (Node.js, InfluxDB, Flask, SQLite, IA)]
-│
-[Dashboard web (Astro, React, TailwindCSS, TypeScript)]
-│
-[Usuario final: Visualización, alertas, gestión]
+PlantsCare es una plataforma modular que:
+
+- **Captura** datos de sensores (temperatura, humedad, CO₂, luz, pH, EC) usando ESP8266 via CoAP y SensorTile.box Pro via BLE.
+- **Envía** imágenes desde ESP32-CAM al servidor mediante HTTP POST para clasificación de plagas y madurez.
+- **Procesa** y almacena lecturas en InfluxDB y resultados de IA en SQLite, todo en un backend Flask/ONNX desplegado en AWS EC2.
+- **Ofrece** un dashboard ultrarrápido con Astro + React + TypeScript + TailwindCSS que consume endpoints REST/Express y muestra gráficas en tiempo real (Recharts).
+- **Permite** integración con paneles de Grafana para analítica avanzada y visualización histórica.
+- **Mantiene** comunicación fiable mediante MQTT (Mosquitto) y es extensible a nuevos dispositivos.
 
 ---
 
-## 💻 Tecnologías utilizadas
+## 🛠️ Tecnologías
 
-- **Frontend:** Astro, React, TypeScript, TailwindCSS
-- **Backend:** Node.js, Flask (Python), MQTT, CoAP
-- **IoT:** ESP8266, ESP32-CAM, SensorTile.box Pro, Raspberry Pi 4
-- **Cloud:** AWS EC2 (Ubuntu), InfluxDB, SQLite, Python scripts, ONNX
-- **Otros:** Grafana, Recharts, Mosquitto MQTT Broker
+- **Frontend:** Astro · React · TypeScript · TailwindCSS · Recharts
+- **Visualización adicional:** Grafana
+- **Backend IoT:** Node.js + Express · Flask (Python) + ONNX · MQTT (Mosquitto) · CoAP · HTTP POST
+- **Dispositivos:** ESP8266 · ESP32-CAM · SensorTile.box Pro · Raspberry Pi 4
+- **Cloud & Base de datos:** AWS EC2 · InfluxDB · SQLite
+- **DevOps:** Vercel · GitHub Actions · Docker (opcional)
 
 ---
 
-## 🛠️ Instalación y puesta en marcha
+## 🏗️ Arquitectura & Flujo de Datos
 
-> **Requisitos:** Node.js, Python 3.x, Raspberry Pi (para gateway), cuenta de AWS (opcional para despliegue cloud), sensores compatibles (ESP8266, ESP32-CAM...)
+```mermaid
+flowchart LR
+  subgraph Sensores
+    A[ESP8266: temp/CO₂/humedad] -->|CoAP| RPI[Raspberry Pi]
+    B[SensorTile.box Pro] -->|BLE| RPI
+    C[ESP32-CAM] -->|HTTP POST imágenes| RPI
+  end
 
-1. **Clona el repositorio:**
-   ```bash
-   git clone https://github.com/albertoguinda/plantscare.git
-   cd plantscare
-   Instala dependencias del frontend:
-   ```
+  RPI -->|MQTT (Mosquitto)| EC2[(AWS EC2)]
+  EC2 --> InfluxDB
+  EC2 --> SQLite
+  EC2 -->|Flask /api/classify| ONNX["EfficientNet_B0.onnx"]
+  Browser -->|REST /api/*| Astro[Astro + React]
+Muestreo cada 30 s; el dashboard puede alternar entre datos reales y simulados.
 
+🚀 Instalación & Ejecución
 bash
-cd frontend
+Copiar
+Editar
+git clone https://github.com/albertoguinda/plantscare.git
+cd plantscare
+
+# Backend IoT y ML
+cd EC2_AWS
+pip install -r requirements.txt
+mosquitto -c mosquitto.conf &
+
+cd ../RASPBERRY
+python servidorcoap.py &
+python mqtt_to_influx.py &
+python servidorflask.py &
+
+# Frontend
+cd src
 npm install
 npm run dev
 
-# Accede a http://localhost:4321
+# Abre en el navegador:
+http://localhost:4173
+📂 Estructura del Proyecto
+csharp
+Copiar
+Editar
+/
+├── DATASHEETS/            # Datasheets de sensores y microcontroladores
+├── EC2_AWS/               # Backend ML & scripts MQTT → InfluxDB
+├── ESP_AGUA/              # Firmware ESP8266 (sensor de agua)
+├── ESP_AIRE/              # Firmware ESP8266 (sensor de aire)
+├── ESP_CAMARA/            # Código ESP32-CAM (streaming via HTTP POST)
+├── RASPBERRY/             # Scripts Python CoAP, MQTT e integración
+├── docs/                  # Diagramas, BMC, DAFO, presentaciones
+├── dist/                  # Build estático del frontend
+├── public/                # Assets estáticos para Astro
+├── src/                   # Código fuente Astro + React + TailwindCSS
+└── README.md
+🔧 Futuras Mejoras
+Añadir conectividad LoRaWAN/NB-IoT para entornos remotos.
 
-Backend y scripts:
-(Incluye instrucciones específicas para Node.js, Flask, etc.)
+Implementar cifrado TLS/DTLS en MQTT/CoAP.
 
-Configura el entorno IoT:
+Panel web para configurar umbrales y actuadores.
 
-Flashea los sensores con el firmware (ESP8266, ESP32-CAM…).
+Integración de actuadores automáticos para cuidado de cultivos y prevención de plagas.
 
-Edita las IPs y claves en los scripts de configuración.
+📜 Licencia & Créditos
+MIT © Alberto Guinda Sevilla
 
-Lanza el gateway en la Raspberry Pi.
+GitHub: github.com/albertoguinda
 
-Opcional:
-
-Configura la nube en AWS EC2.
-
-Instala y ejecuta InfluxDB, SQLite y el modelo IA.
-
-Para instrucciones detalladas, revisa la documentación incluida en el repositorio.
-
-📋 Guía de uso
-Accede a la demo online usando Google.
-
-Visualiza el estado de los cultivos, gráficas, alertas y sugerencias desde el panel web.
-
-Sube imágenes desde sensores/cámaras para que la IA analice plagas y madurez.
-
-Gestiona notificaciones y revisa históricos.
-
-Amplía el sistema con nuevos sensores fácilmente (modularidad total).
-
-🌱 Roadmap
-Soporte para más sensores (pH, EC, NPK, actuadores…)
-
-IA más avanzada y datasets personalizados.
-
-Panel solar y conectividad NB-IoT/LoRaWAN.
-
-Apps móviles (iOS, Android).
-
-Automatización de riego y fertilización.
-
-Integración con servicios de terceros (Telegram, WhatsApp, APIs meteorológicas, etc.).
-
-Instaladores automáticos y asistentes de configuración.
-
-👤 Autores y contacto
-Alberto Guinda Sevilla
-LinkedIn
-Portfolio
-albertoguinda@gmail.com
-
-📝 Licencia
-Este proyecto está licenciado bajo la licencia MIT. Ver LICENSE para más detalles.
-
-🙌 Agradecimientos
-Instituto Tecnológico de Aragón (ITA)
-
-Profesores y mentores
-
-Comunidad open-source IoT y agrotech
+LinkedIn: linkedin.com/in/albertoguindasevilla
+```
