@@ -5,7 +5,21 @@
 
 ---
 
-[🌐 Live Demo](https://plantscareweb.vercel.app) | [💻 Código en GitHub](https://github.com/albertoguinda/plantscare)
+[🌐 Live Demo](https://plantscareweb.vercel.app) | [💻 Código en GitHub](https://github.com/albertoguinda/plantscare)  
+[![GitHub](https://img.shields.io/badge/GitHub-albertoguinda-181717?logo=github)](https://github.com/albertoguinda)  
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Alberto-0A66C2?logo=linkedin)](https://www.linkedin.com/in/albertoguindasevilla/)
+
+---
+
+## 📋 Contenido
+
+1. [Resumen](#-resumen)
+2. [Tecnologías](#-tecnologías)
+3. [Arquitectura & Flujo de Datos](#-arquitectura--flujo-de-datos)
+4. [Instalación & Ejecución](#-instalación--ejecución)
+5. [Estructura del Proyecto](#-estructura-del-proyecto)
+6. [Futuras Mejoras](#-futuras-mejoras)
+7. [Licencia & Créditos](#-licencia--créditos)
 
 ---
 
@@ -52,9 +66,7 @@ PlantsCare es una plataforma modular que:
 Muestreo cada 30 s; el dashboard puede alternar entre datos reales y simulados.
 
 🚀 Instalación & Ejecución
-bash
-Copiar
-Editar
+
 git clone https://github.com/albertoguinda/plantscare.git
 cd plantscare
 
@@ -75,10 +87,9 @@ npm run dev
 
 # Abre en el navegador:
 http://localhost:4321
+
 📂 Estructura del Proyecto
-text
-Copiar
-Editar
+
 /
 ├── DATASHEETS/            # Datasheets de sensores y microcontroladores
 ├── EC2_AWS/               # Backend ML & scripts MQTT → InfluxDB
@@ -91,6 +102,7 @@ Editar
 ├── public/                # Assets estáticos para Astro
 ├── src/                   # Código fuente Astro + React + TailwindCSS
 └── README.md
+
 🔧 Futuras Mejoras
 Añadir conectividad LoRaWAN/NB-IoT para entornos remotos.
 
@@ -101,9 +113,11 @@ Panel web para configurar umbrales y actuadores.
 Integración de actuadores automáticos para cuidado de cultivos y prevención de plagas.
 
 📜 Licencia & Créditos
+
 MIT © Alberto Guinda Sevilla
 
 GitHub: github.com/albertoguinda
 
 LinkedIn: linkedin.com/in/albertoguindasevilla
+
 ```
