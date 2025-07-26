@@ -63,6 +63,8 @@ PlantsCare es una plataforma modular que:
 │   └─ Flask + ONNX (EfficientNet_B0)
 │
 └─ Frontend (Astro + React) ───▶ Consume REST `/api/*` → Gráficas (Recharts)
+```
+
 Muestreo cada 30 s; el dashboard puede alternar entre datos reales y simulados.
 
 🚀 Instalación & Ejecución
@@ -71,6 +73,7 @@ git clone https://github.com/albertoguinda/plantscare.git
 cd plantscare
 
 # Backend IoT y ML
+
 cd EC2_AWS
 pip install -r requirements.txt
 mosquitto -c mosquitto.conf &
@@ -81,43 +84,48 @@ python mqtt_to_influx.py &
 python servidorflask.py &
 
 # Frontend
+
 cd src
 npm install
 npm run dev
 
 # Abre en el navegador:
+
 http://localhost:4321
 
 📂 Estructura del Proyecto
 
 /
-├── DATASHEETS/            # Datasheets de sensores y microcontroladores
-├── EC2_AWS/               # Backend ML & scripts MQTT → InfluxDB
-├── ESP_AGUA/              # Firmware ESP8266 (sensor de agua)
-├── ESP_AIRE/              # Firmware ESP8266 (sensor de aire)
-├── ESP_CAMARA/            # Código ESP32-CAM (streaming via HTTP POST)
-├── RASPBERRY/             # Scripts Python CoAP, MQTT e integración
-├── docs/                  # Diagramas, BMC, DAFO, presentaciones
-├── dist/                  # Build estático del frontend
-├── public/                # Assets estáticos para Astro
-├── src/                   # Código fuente Astro + React + TailwindCSS
+├── DATASHEETS/ # Datasheets de sensores y microcontroladores
+├── EC2_AWS/ # Backend ML & scripts MQTT → InfluxDB
+├── ESP_AGUA/ # Firmware ESP8266 (sensor de agua)
+├── ESP_AIRE/ # Firmware ESP8266 (sensor de aire)
+├── ESP_CAMARA/ # Código ESP32-CAM (streaming via HTTP POST)
+├── RASPBERRY/ # Scripts Python CoAP, MQTT e integración
+├── docs/ # Diagramas, BMC, DAFO, presentaciones
+├── dist/ # Build estático del frontend
+├── public/ # Assets estáticos para Astro
+├── src/ # Código fuente Astro + React + TailwindCSS
 └── README.md
 
-🔧 Futuras Mejoras
-Añadir conectividad LoRaWAN/NB-IoT para entornos remotos.
+```
 
-Implementar cifrado TLS/DTLS en MQTT/CoAP.
+---
 
-Panel web para configurar umbrales y actuadores.
+## 🔧 Futuras Mejoras
 
-Integración de actuadores automáticos para cuidado de cultivos y prevención de plagas.
+- Añadir conectividad LoRaWAN/NB-IoT para entornos remotos.
+- Implementar cifrado TLS/DTLS en MQTT/CoAP.
+- Panel web para configurar umbrales y actuadores.
+- **Integración de actuadores automáticos para cuidado de cultivos y prevención de plagas.**
 
-📜 Licencia & Créditos
+---
+
+## 📜 Licencia & Créditos
 
 MIT © Alberto Guinda Sevilla
 
-GitHub: github.com/albertoguinda
-
-LinkedIn: linkedin.com/in/albertoguindasevilla
+- GitHub: [github.com/albertoguinda](https://github.com/albertoguinda)
+- LinkedIn: [linkedin.com/in/albertoguindasevilla](https://linkedin.com/in/albertoguindasevilla/)
 
 ```
