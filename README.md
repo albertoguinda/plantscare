@@ -5,8 +5,7 @@
 
 ---
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-000?logo=vercel)](https://plantscareweb.vercel.app)  
-[![Código en GitHub](https://img.shields.io/badge/GitHub-Repo-181717?logo=github)](https://github.com/albertoguinda/plantscare)
+[🌐 Live Demo](https://plantscareweb.vercel.app) | [💻 Código en GitHub](https://github.com/albertoguinda/plantscare)
 
 ---
 
@@ -35,30 +34,27 @@ PlantsCare es una plataforma modular que:
 
 ## 🏗️ Arquitectura & Flujo de Datos
 
-```bash
+```text
 /
 ├─ Sensores
-│ ├─ ESP8266 (CoAP) ───▶ Raspberry Pi
-│ ├─ SensorTile.box Pro (BLE) ───▶ Raspberry Pi
-│ └─ ESP32-CAM (HTTP POST imágenes) ───▶ Raspberry Pi
+│   ├─ ESP8266 (CoAP) ───▶ Raspberry Pi
+│   ├─ SensorTile.box Pro (BLE) ───▶ Raspberry Pi
+│   └─ ESP32-CAM (HTTP POST imágenes) ───▶ Raspberry Pi
 │
 ├─ Raspberry Pi ───▶ MQTT (Mosquitto) ───▶ AWS EC2
 │
 ├─ AWS EC2
-│ ├─ InfluxDB
-│ ├─ SQLite
-│ └─ Flask + ONNX (EfficientNet_B0)
+│   ├─ InfluxDB
+│   ├─ SQLite
+│   └─ Flask + ONNX (EfficientNet_B0)
 │
-└─ Frontend (Astro + React) ───▶ Consume REST /api/\* → Gráficas (Recharts)
-```
+└─ Frontend (Astro + React) ───▶ Consume REST `/api/*` → Gráficas (Recharts)
+Muestreo cada 30 s; el dashboard puede alternar entre datos reales y simulados.
 
-> Los sensores muestrean cada 30 s; el dashboard puede alternar entre datos reales y simulados.
-
----
-
-## 🚀 Instalación & Ejecución
-
-```bash
+🚀 Instalación & Ejecución
+bash
+Copiar
+Editar
 git clone https://github.com/albertoguinda/plantscare.git
 cd plantscare
 
@@ -80,22 +76,21 @@ npm run dev
 # Abre en el navegador:
 http://localhost:4321
 📂 Estructura del Proyecto
-
+text
+Copiar
+Editar
 /
 ├── DATASHEETS/            # Datasheets de sensores y microcontroladores
 ├── EC2_AWS/               # Backend ML & scripts MQTT → InfluxDB
 ├── ESP_AGUA/              # Firmware ESP8266 (sensor de agua)
 ├── ESP_AIRE/              # Firmware ESP8266 (sensor de aire)
-├── ESP_CAMARA/            # Código ESP32-CAM (streaming HTTP POST)
+├── ESP_CAMARA/            # Código ESP32-CAM (streaming via HTTP POST)
 ├── RASPBERRY/             # Scripts Python CoAP, MQTT e integración
 ├── docs/                  # Diagramas, BMC, DAFO, presentaciones
 ├── dist/                  # Build estático del frontend
 ├── public/                # Assets estáticos para Astro
 ├── src/                   # Código fuente Astro + React + TailwindCSS
 └── README.md
-
----
-
 🔧 Futuras Mejoras
 Añadir conectividad LoRaWAN/NB-IoT para entornos remotos.
 
@@ -111,6 +106,4 @@ MIT © Alberto Guinda Sevilla
 GitHub: github.com/albertoguinda
 
 LinkedIn: linkedin.com/in/albertoguindasevilla
-
----
 ```
