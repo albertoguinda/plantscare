@@ -80,7 +80,7 @@ cd plantscare
 ```bash
 cd EC2_AWS
 pip install -r requirements.txt
-mosquitto -c mosquitto.conf &
+mosquitto -c mosquitto.conf
 ```
 
 ```bash
