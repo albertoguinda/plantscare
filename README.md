@@ -5,7 +5,8 @@
 
 ---
 
-[🌐 Live Demo](https://plantscareweb.vercel.app) | [💻 Código en GitHub](https://github.com/albertoguinda/plantscare)  
+[🌐 Live Demo](https://plantscareweb.vercel.app) | [💻 Código en GitHub](https://github.com/albertoguinda/plantscare)
+
 [![GitHub](https://img.shields.io/badge/GitHub-albertoguinda-181717?logo=github)](https://github.com/albertoguinda)  
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Alberto-0A66C2?logo=linkedin)](https://www.linkedin.com/in/albertoguindasevilla/)
 
@@ -67,36 +68,45 @@ PlantsCare es una plataforma modular que:
 
 Muestreo cada 30 s; el dashboard puede alternar entre datos reales y simulados.
 
-🚀 Instalación & Ejecución
+# Instalación & Ejecución
 
+```bash
 git clone https://github.com/albertoguinda/plantscare.git
 cd plantscare
+```
 
 # Backend IoT y ML
 
+```bash
 cd EC2_AWS
 pip install -r requirements.txt
 mosquitto -c mosquitto.conf &
+```
 
+```bash
 cd ../RASPBERRY
 python servidorcoap.py &
 python mqtt_to_influx.py &
 python servidorflask.py &
+```
 
 # Frontend
 
+```bash
 cd src
 npm install
 npm run dev
+```
 
 # Abre en el navegador:
 
+```bash
 http://localhost:4321
+```
 
 📂 Estructura del Proyecto
 
 ```bash
-
 /
 ├── DATASHEETS/ # Datasheets de sensores y microcontroladores
 ├── EC2_AWS/ # Backend ML & scripts MQTT → InfluxDB
@@ -128,7 +138,3 @@ MIT © Alberto Guinda Sevilla
 
 - GitHub: [github.com/albertoguinda](https://github.com/albertoguinda)
 - LinkedIn: [linkedin.com/in/albertoguindasevilla](https://linkedin.com/in/albertoguindasevilla/)
-
-```
-
-```
